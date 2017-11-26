@@ -2350,6 +2350,12 @@ SSL/TLS:
               HTTP/2.   To  use  those   cipher  suites  with  HTTP/2,
               consider   to  use   --client-no-http2-cipher-black-list
               option.  But be aware its implications.
+  --tls-postpone-early-data
+              Postpone forwarding  HTTP requests  sent in  early data,
+              including  those  sent in  partially  in  it, until  TLS
+              handshake  finishes.   This  option   must  be  used  to
+              mitigate  possible  replay  attack  unless  all  backend
+              servers recognize "Early-Data" header field.
 
 HTTP/2 and SPDY:
   -c, --frontend-http2-max-concurrent-streams=<N>
@@ -3407,6 +3413,7 @@ int main(int argc, char **argv) {
         {SHRPX_OPT_NO_STRIP_INCOMING_X_FORWARDED_PROTO.c_str(), no_argument,
          &flag, 158},
         {SHRPX_OPT_SINGLE_PROCESS.c_str(), no_argument, &flag, 159},
+        {SHRPX_OPT_TLS_POSTPONE_EARLY_DATA.c_str(), no_argument, &flag, 160},
         {nullptr, 0, nullptr, 0}};
 
     int option_index = 0;
@@ -4166,6 +4173,11 @@ int main(int argc, char **argv) {
       case 159:
         // --single-process
         cmdcfgs.emplace_back(SHRPX_OPT_SINGLE_PROCESS,
+                             StringRef::from_lit("yes"));
+        break;
+      case 160:
+        // --tls-postpone-early-data
+        cmdcfgs.emplace_back(SHRPX_OPT_TLS_POSTPONE_EARLY_DATA,
                              StringRef::from_lit("yes"));
         break;
       default:

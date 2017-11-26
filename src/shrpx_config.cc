@@ -2016,6 +2016,11 @@ int option_lookup_token(const char *name, size_t namelen) {
     break;
   case 23:
     switch (name[22]) {
+    case 'a':
+      if (util::strieq_l("tls-postpone-early-dat", name, 22)) {
+        return SHRPX_OPTID_TLS_POSTPONE_EARLY_DATA;
+      }
+      break;
     case 'e':
       if (util::strieq_l("client-private-key-fil", name, 22)) {
         return SHRPX_OPTID_CLIENT_PRIVATE_KEY_FILE;
@@ -3550,6 +3555,10 @@ int parse_config(Config *config, int optid, const StringRef &opt,
     return 0;
   case SHRPX_OPTID_NO_VERIFY_OCSP:
     config->tls.ocsp.no_verify = util::strieq_l("yes", optarg);
+
+    return 0;
+  case SHRPX_OPTID_TLS_POSTPONE_EARLY_DATA:
+    config->tls.postpone_early_data = util::strieq_l("yes", optarg);
 
     return 0;
   case SHRPX_OPTID_CONF:
