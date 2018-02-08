@@ -55,3 +55,7 @@ _VC_ROOT/
 *.pyd
 *.egg-info/
 python/nghttp2.c
+
+.idea/
+build/
+cmake-build*/
