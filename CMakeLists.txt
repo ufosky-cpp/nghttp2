@@ -60,6 +60,7 @@ find_package(PythonInterp)
 
 # Auto-detection of features that can be toggled
 set(OPENSSL_ROOT_DIR /usr/local/opt/openssl)
+set(OPENSSL_INCLUDE_DIR /usr/local/opt/openssl/include)
 set(OPENSSL_LIBRARIES /usr/local/opt/openssl/lib/libssl.a /usr/local/opt/openssl/lib/libcrypto.a)
 set(OPENSSL_FOUND TRUE)
 #find_package(OpenSSL 1.0.2n)
