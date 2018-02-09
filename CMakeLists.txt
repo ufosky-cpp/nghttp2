@@ -32,6 +32,8 @@ set(LT_CURRENT  29)
 set(LT_REVISION 2)
 set(LT_AGE      15)
 
+set(ENABLE_ASIO_LIB ON)
+set(ENABLE_EXAMPLES ON)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(Version)
 
@@ -57,7 +59,10 @@ include(GNUInstallDirs)
 find_package(PythonInterp)
 
 # Auto-detection of features that can be toggled
-find_package(OpenSSL 1.0.1)
+set(OPENSSL_ROOT_DIR /usr/local/opt/openssl)
+set(OPENSSL_LIBRARIES /usr/local/opt/openssl/lib/libssl.a /usr/local/opt/openssl/lib/libcrypto.a)
+set(OPENSSL_FOUND TRUE)
+#find_package(OpenSSL 1.0.2n)
 find_package(Libev 4.11)
 find_package(Libcares 1.7.5)
 find_package(ZLIB 1.2.3)
@@ -236,9 +241,9 @@ if(ENABLE_HPACK_TOOLS AND NOT HAVE_JANSSON)
 endif()
 
 # C++ library libnghttp2_asio
-if(ENABLE_EXAMPLES AND NOT (OPENSSL_FOUND AND LIBEVENT_OPENSSL_FOUND))
-  message(FATAL_ERROR "examples were requested (ENABLE_EXAMPLES=1) but dependencies are not met.")
-endif()
+#if(ENABLE_EXAMPLES AND NOT (OPENSSL_FOUND AND LIBEVENT_OPENSSL_FOUND))
+#  message(FATAL_ERROR "examples were requested (ENABLE_EXAMPLES=1) but dependencies are not met.")
+#endif()
 
 # third-party http-parser only be built when needed
 if(ENABLE_EXAMPLES OR ENABLE_APP OR ENABLE_HPACK_TOOLS OR ENABLE_ASIO_LIB)
